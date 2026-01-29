@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { SignOut } from '@/utils/auth-helpers/server';
 import { handleRequest } from '@/utils/auth-helpers/client';
-import Logo from '@/components/icons/Logo';
 import { usePathname, useRouter } from 'next/navigation';
 import { getRedirectMethod } from '@/utils/auth-helpers/settings';
 import s from './Navbar.module.css';
+import Image from 'next/image';
 
 interface NavlinksProps {
   user?: any;
@@ -19,40 +19,52 @@ export default function Navlinks({ user }: NavlinksProps) {
   const requestRouter = redirectMethod === 'client' ? router : null;
 
   return (
-    <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
-      <div className="flex items-center flex-1">
-        <Link href="/" className={s.logo} aria-label="Logo">
-          <Logo />
+    <div className="flex h-16 items-center justify-between">
+      <div className="flex items-center gap-2">
+        <Link href="/" className={s.logo} aria-label="Sharedon home">
+          <span className="flex items-center gap-2">
+            <Image
+              src="/sharedon-logo.png"
+              alt="Sharedon Logo"
+              width={32}
+              height={32}
+              priority
+            />
+            <span className="text-xl font-bold">Sharedon</span>
+          </span>
         </Link>
-        <nav className="ml-6 space-x-2 lg:block">
-          {pathname === '/' ? (
-            <>
-              <Link href="/#features" className={s.link}>
-                Features
-              </Link>
-              <Link href="/#use-cases" className={s.link}>
-                Use Cases
-              </Link>
-              <Link href="/#shortcuts" className={s.link}>
-                Shortcuts
-              </Link>
-              <Link href="/pricing" className={s.link}>
-                Pricing
-              </Link>
-            </>
-          ) : (
-            <Link href="/pricing" className={s.link}>
+      </div>
+
+      <nav className="hidden md:flex items-center gap-8">
+        {pathname === '/' ? (
+          <>
+            <Link href="/#features" className={s.link}>
+              Features
+            </Link>
+            <Link href="/#use-cases" className={s.link}>
+              Use Cases
+            </Link>
+            <Link href="/#shortcuts" className={s.link}>
+              Shortcuts
+            </Link>
+            <Link href="/#pricing" className={s.link}>
               Pricing
             </Link>
-          )}
-          {user && (
-            <Link href="/account" className={s.link}>
-              Account
-            </Link>
-          )}
-        </nav>
-      </div>
-      <div className="flex justify-end space-x-8">
+          </>
+        ) : (
+          <Link href="/#pricing" className={s.link}>
+            Pricing
+          </Link>
+        )}
+      </nav>
+
+      <div className="flex items-center gap-3">
+        {pathname !== '/' && user && (
+          <Link href="/account" className={s.link}>
+            Account
+          </Link>
+        )}
+
         {user ? (
           <form onSubmit={(e) => handleRequest(e, SignOut, requestRouter)}>
             <input type="hidden" name="pathName" value={pathname} />
@@ -62,7 +74,7 @@ export default function Navlinks({ user }: NavlinksProps) {
           </form>
         ) : (
           <Link href="/signin" className={s.link}>
-            Sign In
+            Login
           </Link>
         )}
       </div>

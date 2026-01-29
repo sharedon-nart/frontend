@@ -1,5 +1,5 @@
 .root {
-  @apply sticky top-0 bg-black z-40 transition-all duration-150 h-16 md:h-20;
+  @apply sticky top-0 left-0 right-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl transition-all duration-150 h-16;
 }
 
 .link {
@@ -11,9 +11,9 @@
 }
 
 .link:focus {
-  @apply outline-none text-zinc-100 ring-2 ring-pink-500 ring-opacity-50;
+  @apply outline-none text-foreground ring-2 ring-ring/50;
 }
 
 .logo {
-  @apply cursor-pointer rounded-full transform duration-100 ease-in-out;
+  @apply cursor-pointer transform duration-100 ease-in-out;
 }

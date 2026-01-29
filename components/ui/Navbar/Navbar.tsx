@@ -10,13 +10,13 @@ export default async function Navbar() {
   } = await supabase.auth.getUser();
 
   return (
-    <nav className={s.root}>
+    <header className={s.root}>
       <a href="#skip" className="sr-only focus:not-sr-only">
         Skip to content
       </a>
-      <div className="max-w-6xl px-6 mx-auto">
+      <div className="container mx-auto px-4">
         <Navlinks user={user} />
       </div>
-    </nav>
+    </header>
   );
 }

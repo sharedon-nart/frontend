@@ -26,7 +26,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} bg-background text-foreground antialiased`}
+        className={`${inter.variable} font-sans bg-background text-foreground antialiased`}
       >
         <Navbar />
         <main
