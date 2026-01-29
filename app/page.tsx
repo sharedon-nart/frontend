@@ -1,24 +1,17 @@
-import Pricing from '@/components/ui/Pricing/Pricing';
-import { createClient } from '@/utils/supabase/server';
-import {
-  getProducts,
-  getSubscription,
-  getUser
-} from '@/utils/supabase/queries';
+import { Cta } from '@/components/landing/cta';
+import { Features } from '@/components/landing/features';
+import { Hero } from '@/components/landing/hero';
+import { Shortcuts } from '@/components/landing/shortcuts';
+import { UseCases } from '@/components/landing/use-cases';
 
-export default async function PricingPage() {
-  const supabase = createClient();
-  const [user, products, subscription] = await Promise.all([
-    getUser(supabase),
-    getProducts(supabase),
-    getSubscription(supabase)
-  ]);
-
+export default function HomePage() {
   return (
-    <Pricing
-      user={user}
-      products={products ?? []}
-      subscription={subscription}
-    />
+    <main>
+      <Hero />
+      <Features />
+      <UseCases />
+      <Shortcuts />
+      <Cta />
+    </main>
   );
 }

@@ -13,7 +13,10 @@ interface NavlinksProps {
 }
 
 export default function Navlinks({ user }: NavlinksProps) {
-  const router = getRedirectMethod() === 'client' ? useRouter() : null;
+  const router = useRouter();
+  const pathname = usePathname();
+  const redirectMethod = getRedirectMethod();
+  const requestRouter = redirectMethod === 'client' ? router : null;
 
   return (
     <div className="relative flex flex-row justify-between py-4 align-center md:py-6">
@@ -22,9 +25,26 @@ export default function Navlinks({ user }: NavlinksProps) {
           <Logo />
         </Link>
         <nav className="ml-6 space-x-2 lg:block">
-          <Link href="/" className={s.link}>
-            Pricing
-          </Link>
+          {pathname === '/' ? (
+            <>
+              <Link href="/#features" className={s.link}>
+                Features
+              </Link>
+              <Link href="/#use-cases" className={s.link}>
+                Use Cases
+              </Link>
+              <Link href="/#shortcuts" className={s.link}>
+                Shortcuts
+              </Link>
+              <Link href="/pricing" className={s.link}>
+                Pricing
+              </Link>
+            </>
+          ) : (
+            <Link href="/pricing" className={s.link}>
+              Pricing
+            </Link>
+          )}
           {user && (
             <Link href="/account" className={s.link}>
               Account
@@ -34,8 +54,8 @@ export default function Navlinks({ user }: NavlinksProps) {
       </div>
       <div className="flex justify-end space-x-8">
         {user ? (
-          <form onSubmit={(e) => handleRequest(e, SignOut, router)}>
-            <input type="hidden" name="pathName" value={usePathname()} />
+          <form onSubmit={(e) => handleRequest(e, SignOut, requestRouter)}>
+            <input type="hidden" name="pathName" value={pathname} />
             <button type="submit" className={s.link}>
               Sign out
             </button>
